@@ -3,11 +3,12 @@ package main
 import (
 	"os"
 	"github.com/codegangsta/cli"
+	"github.com/davidjohansson/ecmdsolrsearch"
 )
 
 func main() {
 	app := cli.NewApp()
-	app.Name = "dsas"
+	app.Name = "ecmd"
 	app.Usage = "cli for common Escenic tasks"
 
 	app.Commands = []cli.Command{
@@ -16,7 +17,7 @@ func main() {
 			Aliases:     []string{"a"},
 			Usage:     "search solr for a given content type",
 			Action: func(c *cli.Context) {
-				println("searching solr for: ", c.Args().First())
+				ecmdsolrsearch.Search(c.Args().First())
 			},
 		},
 		{
