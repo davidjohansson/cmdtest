@@ -4,6 +4,7 @@ import (
 	"os"
 	"github.com/codegangsta/cli"
 	"github.com/davidjohansson/ecmdsolrsearch"
+
 )
 
 func main() {
@@ -14,17 +15,37 @@ func main() {
 	app.Commands = []cli.Command{
 		{
 			Name:      "search",
-			Aliases:     []string{"a"},
+			Aliases:     []string{"s"},
 			Usage:     "search solr for a given content type",
 			Action: func(c *cli.Context) {
 				ecmdsolrsearch.Search(c.Args().First())
 			},
 		},
 		{
-			Name:      "list",
-			Aliases:     []string{"c"},
-			Usage:     "list values for a given field",
-			Action: func(c *cli.Context) {
+			Name:      "article",
+			Aliases:   []string{"a"},
+			Usage:     "inspects an article",
+			Flags:	 []cli.Flag {
+              cli.StringFlag{
+                Name: "fields, f",
+                Usage: "comma separated list of fields to display",
+              },
+    		cli.StringFlag{
+			  Name: "relation, r",
+			  Usage: "relations to display",
+			},
+            },
+
+			Action: 	func(c *cli.Context) {
+
+			  if c.String("fields") == "spanish" {
+                println("Hola")
+              } else {
+                println("Hello")
+              }
+
+
+
 				println("list for field: ", c.Args().First())
 			},
 		},
