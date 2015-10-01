@@ -4,7 +4,7 @@ import (
 	"os"
 	"github.com/codegangsta/cli"
 	"github.com/davidjohansson/ecmdsolrsearch"
-
+	"github.com/davidjohansson/ecmdinspect"
 )
 
 func main() {
@@ -32,21 +32,12 @@ func main() {
               },
     		cli.StringFlag{
 			  Name: "relation, r",
-			  Usage: "relations to display",
+			  Usage: "relation to display",
 			},
             },
 
-			Action: 	func(c *cli.Context) {
-
-			  if c.String("fields") == "spanish" {
-                println("Hola")
-              } else {
-                println("Hello")
-              }
-
-
-
-				println("list for field: ", c.Args().First())
+			Action: func(c *cli.Context) {
+              ecmdinspect.Inspect(c.String("fields"), c.Args().First())
 			},
 		},
 	}
