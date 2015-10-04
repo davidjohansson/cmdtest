@@ -5,6 +5,9 @@ import (
 	"github.com/codegangsta/cli"
 	"github.com/davidjohansson/ecmdsolrsearch"
 	"github.com/davidjohansson/ecmdinspect"
+	"bufio"
+	"fmt"
+	"strings"
 )
 
 func main() {
@@ -37,7 +40,17 @@ func main() {
             },
 
 			Action: func(c *cli.Context) {
-              ecmdinspect.Inspect(c.String("fields"), c.Args().First())
+
+				ids := c.Args()
+			
+				if len(ids) == 0 {
+					reader := bufio.NewReader(os.Stdin)
+		    		text, _ := reader.ReadString('\n')
+					ids = strings.Split(text, " ")
+
+					}
+					ecmdinspect.Inspect(c.String("fields"), ids)
+					fmt.Println(ids)
 			},
 		},
 	}
