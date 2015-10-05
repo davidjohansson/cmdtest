@@ -39,11 +39,15 @@ func main() {
 				},
 			},
 			Action: func(c *cli.Context) {
+
 				ids := c.Args()
 				if len(ids) == 0 {
-					reader := bufio.NewReader(os.Stdin)
-					text, _ := reader.ReadString('\n')
-					ids = strings.Split(text, " ")
+					piped := make([]string, 0)
+					scanner := bufio.NewScanner(os.Stdin)
+					for scanner.Scan(){
+						piped = append(piped, scanner.Text())
+					}
+					ids = piped
 				}
 				ecmdinspect.Inspect(c.String("fields"), ids)
 			},
@@ -54,9 +58,13 @@ func main() {
 			Action: func(c *cli.Context) {
 				ids := c.Args()
 				if len(ids) == 0 {
+
+
 					reader := bufio.NewReader(os.Stdin)
+					reader.ReadLine()
 					text, _ := reader.ReadString('\n')
 					ids = strings.Split(text, " ")
+
 				}
 				ecmdarea.ListArea(c.Args().Get(0), c.Args().Get(1))
 			},
