@@ -50,7 +50,6 @@ func main() {
 
 					}
 					ecmdinspect.Inspect(c.String("fields"), ids)
-					fmt.Println(ids)
 			},
 		},
 	}
