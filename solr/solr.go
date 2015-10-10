@@ -1,4 +1,4 @@
-package ecmdsolrsearch
+package solr
 
 import (
 	"fmt"

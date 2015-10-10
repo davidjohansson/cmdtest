@@ -1,5 +1,4 @@
-// Package stringutil contains utility functions for working with strings.
-package ecmdinspect
+package article
 
 import (
          "encoding/json"

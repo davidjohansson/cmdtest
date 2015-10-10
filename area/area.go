@@ -1,4 +1,4 @@
-package ecmdarea
+package area
 
 import (
 	"fmt"
