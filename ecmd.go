@@ -3,9 +3,9 @@ package main
 import (
 	"os"
 	"github.com/codegangsta/cli"
-	"github.com/davidjohansson/ecmdsolrsearch"
-	"github.com/davidjohansson/ecmdinspect"
-	"github.com/davidjohansson/ecmdarea"
+	"github.com/davidjohansson/emcd/ecmdsolrsearch"
+	"github.com/davidjohansson/emcd/ecmdinspect"
+	"github.com/davidjohansson/emcd/ecmdarea"
 	"bufio"
 	"strings"
 )
