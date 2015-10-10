@@ -21,7 +21,6 @@ func InspectOne(fields string, objectid string) {
 
 	if err != nil {
 		panic(err)
-
 	}
 
 	jsonDataFromHttp, err := ioutil.ReadAll(resp.Body)
@@ -39,20 +38,28 @@ func InspectOne(fields string, objectid string) {
 	}
 
 	responseMeta := ma["response"].(map[string]interface{})
-	article := responseMeta["article"].(map[string]interface{})
 
+	fmt.Println(fields)
 	fmt.Println(fmt.Sprintf("id:%s", objectid))
+
+	printArticle(fields, objectid, responseMeta)
+
+}
+
+func printArticle(fields string, objectid string, response map[string]interface{}) {
+	article := response["article"].(map[string]interface{})
+
 	for k, v := range article {
 		key := ""
-		if fields != "" {
-			fieldsslice2 := strings.Split(fields, ",")
-			for _, rawfield := range fieldsslice2 {
+		fieldsslice := strings.Split(fields, ",")
+		if fields != "" && fieldsslice[0] != "none" {
+			for _, rawfield := range fieldsslice {
 				field := strings.TrimSpace(rawfield)
 				if (strings.EqualFold(field, strings.TrimSpace(k))) {
 					key = k
 				}
 			}
-		} else {
+		} else if fieldsslice[0] != "none"{
 			key = k
 		}
 

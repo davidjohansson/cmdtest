@@ -31,7 +31,8 @@ func main() {
 			Flags:     []cli.Flag{
 				cli.StringFlag{
 					Name: "fields, f",
-					Usage: "comma separated list of fields to display",
+					Value: "none",
+					Usage: "Comma separated list of fields to display. Leave empty for all fields.",
 				},
 				cli.StringFlag{
 					Name: "relation, r",
