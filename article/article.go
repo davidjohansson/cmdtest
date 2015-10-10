@@ -42,26 +42,29 @@ func InspectOne(fields string, objectid string) {
 	article := responseMeta["article"].(map[string]interface{})
 
 	fmt.Println(fmt.Sprintf("id:%s", objectid))
-	if fields != "" {
-		fieldsslice := strings.Split(fields, ",")
-		for _, rawfield := range fieldsslice {
-			field := strings.TrimSpace(rawfield)
-			fmt.Print(field)
+	for k, v := range article {
+		key := ""
+		if fields != "" {
+			fieldsslice2 := strings.Split(fields, ",")
+			for _, rawfield := range fieldsslice2 {
+				field := strings.TrimSpace(rawfield)
+				if (strings.EqualFold(field, strings.TrimSpace(k))) {
+					key = k
+				}
+			}
+		} else {
+			key = k
+		}
+
+		if key != "" {
+			kp := strings.TrimSpace(key)
+			fmt.Print(kp)
 			fmt.Print(": ")
-			fmt.Print(article[field])
+			fmt.Print(v)
 			fmt.Print("\n")
 		}
-	} else {
-		for k, v := range article {
-			if v != "" {
-				k := strings.TrimSpace(k)
-				fmt.Print(k)
-				fmt.Print(": ")
-				fmt.Print(v)
-				fmt.Print("\n")
-			}
-		}
 	}
+
 	fmt.Print("\n")
 }
 
