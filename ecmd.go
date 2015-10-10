@@ -28,7 +28,7 @@ func main() {
 			Name:      "article",
 			Aliases:   []string{"a"},
 			Usage:     "inspects an article",
-			Flags:     []cli.Flag {
+			Flags:     []cli.Flag{
 				cli.StringFlag{
 					Name: "fields, f",
 					Usage: "comma separated list of fields to display",
@@ -44,7 +44,7 @@ func main() {
 				if len(ids) == 0 {
 					piped := make([]string, 0)
 					scanner := bufio.NewScanner(os.Stdin)
-					for scanner.Scan(){
+					for scanner.Scan() {
 						piped = append(piped, scanner.Text())
 					}
 					ids = piped
@@ -58,13 +58,10 @@ func main() {
 			Action: func(c *cli.Context) {
 				ids := c.Args()
 				if len(ids) == 0 {
-
-
 					reader := bufio.NewReader(os.Stdin)
 					reader.ReadLine()
 					text, _ := reader.ReadString('\n')
 					ids = strings.Split(text, " ")
-
 				}
 				ecmdarea.ListArea(c.Args().Get(0), c.Args().Get(1))
 			},
