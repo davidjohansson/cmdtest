@@ -3,9 +3,9 @@ package main
 import (
 	"os"
 	"github.com/codegangsta/cli"
-	"github.com/davidjohansson/emcd/ecmdsolrsearch"
-	"github.com/davidjohansson/emcd/ecmdinspect"
-	"github.com/davidjohansson/emcd/ecmdarea"
+	area "github.com/davidjohansson/ecmd/area"
+	article "github.com/davidjohansson/ecmd/article"
+	solr "github.com/davidjohansson/ecmd/solr"
 	"bufio"
 	"strings"
 )
@@ -21,7 +21,7 @@ func main() {
 			Aliases:     []string{"s"},
 			Usage:     "search solr for a given content type",
 			Action: func(c *cli.Context) {
-				ecmdsolrsearch.Search(c.Args().First())
+				solr.Search(c.Args().First())
 			},
 		},
 		{
@@ -49,7 +49,7 @@ func main() {
 					}
 					ids = piped
 				}
-				ecmdinspect.Inspect(c.String("fields"), ids)
+				article.Inspect(c.String("fields"), ids)
 			},
 		},
 		{
@@ -63,7 +63,7 @@ func main() {
 					text, _ := reader.ReadString('\n')
 					ids = strings.Split(text, " ")
 				}
-				ecmdarea.ListArea(c.Args().Get(0), c.Args().Get(1))
+				area.ListArea(c.Args().Get(0), c.Args().Get(1))
 			},
 		},
 	}
