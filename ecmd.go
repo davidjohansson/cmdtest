@@ -58,18 +58,23 @@ func main() {
 		{
 			Name:      "area",
 			Usage:     "inspects contents of an area",
+			Flags:     []cli.Flag{
+				cli.BoolFlag{
+					Name: "list, l",
+					Usage: "List all areas",
+				},
+			},
+
 			Action: func(c *cli.Context) {
-
-				/*				ids := c.Args()
-
-								if len(ids) == 0 {
-									reader := bufio.NewReader(os.Stdin)
-									reader.ReadLine()
-									text, _ := reader.ReadString('\n')
-									ids = strings.Split(text, " ")
-								}
-				*/
-				area.ListArea(c.Args().Get(0), c.Args().Get(1))
+				listAreas := c.Bool("list")
+				if !listAreas {
+					reqArea := c.Args().Get(0)
+					section := c.Args().Get(1)
+					area.ListArea(reqArea, section, listAreas)
+				} else{
+					section := c.Args().Get(0)
+					area.ListArea("", section, listAreas)
+				}
 			},
 		},
 	}
