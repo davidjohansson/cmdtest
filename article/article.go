@@ -67,7 +67,7 @@ func printFields(datamap map[string]interface{}, fields string) {
 	for k, v := range datamap {
 		key := ""
 		fieldsslice := strings.Split(fields, ",")
-		if fields != "" && fieldsslice[0] != "_all" {
+		if fields != "" {
 			for _, rawfield := range fieldsslice {
 				field := strings.TrimSpace(rawfield)
 				if (strings.EqualFold(field, strings.TrimSpace(k))) {
@@ -75,7 +75,7 @@ func printFields(datamap map[string]interface{}, fields string) {
 				}
 			}
 
-		} else if fieldsslice[0] == "_all" {
+		} else {
 			key = k
 		}
 

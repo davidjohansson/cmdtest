@@ -32,7 +32,6 @@ func main() {
 			Flags:     []cli.Flag{
 				cli.StringFlag{
 					Name: "fields, f",
-					Value: "_all",
 					Usage: "Comma separated list of fields to display.",
 				},
 				cli.StringFlag{
