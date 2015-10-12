@@ -45,6 +45,7 @@ func InspectOne(fields string, responsedata string,  objectid string) {
 
 	printResponseData(responsedata, objectid, responseMeta)
 	printArticle(fields, objectid, responseMeta)
+	fmt.Print("\n")
 }
 
 type Args struct{
@@ -86,6 +87,5 @@ func printFields(datamap map[string]interface{}, fields string){
 			fmt.Print("\n")
 		}
 	}
-//	fmt.Print("\n")
 }
 
