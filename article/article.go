@@ -14,7 +14,7 @@ func Inspect(fields string, responsedata string, objectids []string) {
 	}
 }
 
-func InspectOne(fields string, responsedata string,  objectid string) {
+func InspectOne(fields string, responsedata string, objectid string) {
 
 	url := fmt.Sprintf("https://objectapi-stage.app.svt.se/object-api/article/%s", objectid)
 	resp, err := http.Get(url)
@@ -48,9 +48,9 @@ func InspectOne(fields string, responsedata string,  objectid string) {
 	fmt.Print("\n")
 }
 
-type Args struct{
-	ArticleFields []string
-	MetaFields	[] string
+type Args struct {
+	ArticleFields  []string
+	MetaFields     [] string
 	RelationFields [] string
 }
 
@@ -63,11 +63,11 @@ func printResponseData(responseData string, objectid string, response map[string
 	printFields(response, responseData)
 }
 
-func printFields(datamap map[string]interface{}, fields string){
+func printFields(datamap map[string]interface{}, fields string) {
 	for k, v := range datamap {
 		key := ""
 		fieldsslice := strings.Split(fields, ",")
-		if fields != "" && fieldsslice[0] != "all" {
+		if fields != "" && fieldsslice[0] != "_all" {
 			for _, rawfield := range fieldsslice {
 				field := strings.TrimSpace(rawfield)
 				if (strings.EqualFold(field, strings.TrimSpace(k))) {
@@ -75,7 +75,7 @@ func printFields(datamap map[string]interface{}, fields string){
 				}
 			}
 
-		} else if fieldsslice[0] == "all" {
+		} else if fieldsslice[0] == "_all" {
 			key = k
 		}
 
