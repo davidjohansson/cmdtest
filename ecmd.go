@@ -7,7 +7,8 @@ import (
 	article "github.com/davidjohansson/ecmd/article"
 	solr "github.com/davidjohansson/ecmd/solr"
 	"bufio"
-	"strings"
+//	"strings"
+
 )
 
 func main() {
@@ -58,13 +59,16 @@ func main() {
 			Name:      "area",
 			Usage:     "inspects contents of an area",
 			Action: func(c *cli.Context) {
-				ids := c.Args()
-				if len(ids) == 0 {
-					reader := bufio.NewReader(os.Stdin)
-					reader.ReadLine()
-					text, _ := reader.ReadString('\n')
-					ids = strings.Split(text, " ")
-				}
+
+				/*				ids := c.Args()
+
+								if len(ids) == 0 {
+									reader := bufio.NewReader(os.Stdin)
+									reader.ReadLine()
+									text, _ := reader.ReadString('\n')
+									ids = strings.Split(text, " ")
+								}
+				*/
 				area.ListArea(c.Args().Get(0), c.Args().Get(1))
 			},
 		},
