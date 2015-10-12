@@ -15,9 +15,11 @@ func Inspect(fields string, objectids []string) {
 }
 
 func InspectOne(fields string, objectid string) {
+
 	url := fmt.Sprintf("https://objectapi-stage.app.svt.se/object-api/article/%s", objectid)
 	resp, err := http.Get(url)
 	defer resp.Body.Close()
+
 
 	if err != nil {
 		panic(err)
@@ -39,11 +41,16 @@ func InspectOne(fields string, objectid string) {
 
 	responseMeta := ma["response"].(map[string]interface{})
 
-	fmt.Println(fields)
 	fmt.Println(fmt.Sprintf("id:%s", objectid))
 
 	printArticle(fields, objectid, responseMeta)
 
+}
+
+type Args struct{
+	ArticleFields []string
+	MetaFields	[] string
+	RelationFields [] string
 }
 
 func printArticle(fields string, objectid string, response map[string]interface{}) {
@@ -52,14 +59,15 @@ func printArticle(fields string, objectid string, response map[string]interface{
 	for k, v := range article {
 		key := ""
 		fieldsslice := strings.Split(fields, ",")
-		if fields != "" && fieldsslice[0] != "none" {
+		if fields != "" && fieldsslice[0] != "all" {
 			for _, rawfield := range fieldsslice {
 				field := strings.TrimSpace(rawfield)
 				if (strings.EqualFold(field, strings.TrimSpace(k))) {
-					key = k
+					key = strings.TrimSpace(k)
 				}
 			}
-		} else if fieldsslice[0] != "none"{
+
+		} else if fieldsslice[0] == "all" {
 			key = k
 		}
 

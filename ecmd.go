@@ -8,6 +8,7 @@ import (
 	solr "github.com/davidjohansson/ecmd/solr"
 	"bufio"
 	"strings"
+	"fmt"
 )
 
 func main() {
@@ -31,7 +32,6 @@ func main() {
 			Flags:     []cli.Flag{
 				cli.StringFlag{
 					Name: "fields, f",
-					Value: "none",
 					Usage: "Comma separated list of fields to display. Leave empty for all fields.",
 				},
 				cli.StringFlag{
@@ -42,7 +42,9 @@ func main() {
 			Action: func(c *cli.Context) {
 
 				ids := c.Args()
+				fmt.Println(c.IsSet("fields"))
 				if len(ids) == 0 {
+					fmt.Println("Waiting for args...")
 					piped := make([]string, 0)
 					scanner := bufio.NewScanner(os.Stdin)
 					for scanner.Scan() {
@@ -50,6 +52,7 @@ func main() {
 					}
 					ids = piped
 				}
+
 				article.Inspect(c.String("fields"), ids)
 			},
 		},
