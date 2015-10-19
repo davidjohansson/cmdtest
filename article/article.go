@@ -16,7 +16,7 @@ func Inspect(fields string, responsedata string, objectids []string) {
 
 func InspectOne(fields string, responsedata string, objectid string) {
 
-	url := fmt.Sprintf("https://objectapi-prod.app.svt.se/object-api/article/%s", objectid)
+	url := fmt.Sprintf("https://objectapi-stage.app.svt.se/object-api/article/%s", objectid)
 	resp, err := http.Get(url)
 	defer resp.Body.Close()
 
