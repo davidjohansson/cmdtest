@@ -38,6 +38,10 @@ func main() {
 					Name: "responsedata, c",
 					Usage: "Comma separated list of response fields to display, e g 'contentType'",
 				},
+				cli.StringFlag{
+					Name: "relations, r",
+					Usage: "Comma separated list of relations to show, e g 'topContentRel'",
+				},
 			},
 			Action: func(c *cli.Context) {
 
@@ -51,7 +55,7 @@ func main() {
 					ids = piped
 				}
 
-				article.Inspect(c.String("fields"), c.String("responsedata"), ids)
+				article.Inspect(c.String("fields"), c.String("responsedata"), c.String("relations"), ids)
 			},
 		},
 		{

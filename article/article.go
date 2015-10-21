@@ -8,13 +8,13 @@ import (
 	"strings"
 )
 
-func Inspect(fields string, responsedata string, objectids []string) {
+func Inspect(fields string, responsedata string, relations string, objectids []string) {
 	for _, id := range objectids {
-		InspectOne(fields, responsedata, id)
+		InspectOne(fields, responsedata, relations, id)
 	}
 }
 
-func InspectOne(fields string, responsedata string, objectid string) {
+func InspectOne(fields string, responsedata string, relations string, objectid string) {
 
 	url := fmt.Sprintf("https://objectapi-stage.app.svt.se/object-api/article/%s", objectid)
 	resp, err := http.Get(url)
@@ -40,11 +40,12 @@ func InspectOne(fields string, responsedata string, objectid string) {
 	}
 
 	responseMeta := ma["response"].(map[string]interface{})
+	linksMeta := ma["links"].(map[string]interface{})
 
 	fmt.Println(fmt.Sprintf("id:%s", objectid))
 
 	printResponseData(responsedata, objectid, responseMeta)
-	printArticle(fields, objectid, responseMeta)
+	printArticle(fields, objectid, responseMeta, linksMeta)
 	fmt.Print("\n")
 }
 
@@ -54,9 +55,16 @@ type Args struct {
 	RelationFields [] string
 }
 
-func printArticle(fields string, objectid string, response map[string]interface{}) {
+func printArticle(fields string, objectid string, response map[string]interface{}, links map[string]interface{}) {
 	article := response["article"].(map[string]interface{})
+//	relatedMeta := links["related"].(map[string]interface{})
+//	teasers := relatedMeta["teasers"].([]interface{})
+
+
 	printFields(article, fields)
+	fmt.Println("rels")
+//	printFields(teasers, "")
+
 }
 
 func printResponseData(responseData string, objectid string, response map[string]interface{}) {
