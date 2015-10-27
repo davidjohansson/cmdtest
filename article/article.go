@@ -35,17 +35,15 @@ func InspectOne(fields string, responsedata string, relations string, objectid s
 
 	var jsonData interface{}
 	err = json.Unmarshal([]byte(jsonDataFromHttp), &jsonData)
-	ma := jsonData.(map[string]interface{})
+	jsonResponse := jsonData.(map[string]interface{})
 
 	if err != nil {
 		panic(err)
 	}
 
-	responseMeta := ma["response"].(map[string]interface{})
-	linksMeta := ma["links"].(map[string]interface{})
+	responseMeta := jsonResponse["response"].(map[string]interface{})
+	linksMeta := jsonResponse["links"].(map[string]interface{})
 
-	//print data
-//	fmt.Println(fmt.Sprintf("id:%s", objectid))
 	printResponseData(responsedata, objectid, responseMeta)
 	printArticle(fields, objectid, responseMeta)
 	printRelations(relations, objectid, linksMeta)
@@ -53,15 +51,8 @@ func InspectOne(fields string, responsedata string, relations string, objectid s
 	fmt.Print("\n")
 }
 
-type Args struct {
-	ArticleFields  []string
-	MetaFields     [] string
-	RelationFields [] string
-}
-
 func printArticle(fields string, objectid string, response map[string]interface{}) {
 	article := response["article"].(map[string]interface{})
-
 	printFields(article, fields)
 
 }
@@ -70,10 +61,9 @@ func printRelations(relations string, objectId string, links map[string]interfac
 
 	if relations != "" {
 		relatedMeta := links["related"].(map[string]interface{})
+		relatedContent := relatedMeta[relations].([]interface{})
 
-		teasers := relatedMeta[relations].([]interface{})
-
-		for _, v := range teasers{
+			for _, v := range relatedContent {
 			teaser := v.(map[string]interface{})
 			fmt.Println(int(teaser["id"].(float64)))
 		}
