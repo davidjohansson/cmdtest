@@ -1,5 +1,6 @@
 # ecmd
-Written in Go, ecmd is a command line tool for common Escenic tasks. It attempts to support piped input/output to allow for chaining of commands.
+Written in Go, ecmd is a command line tool for common Escenic tasks. It attempts to support piped input/output to allow for chaining of commands. 
+
 
 ## Examples
 Print title and body for article 123456:
