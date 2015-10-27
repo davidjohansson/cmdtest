@@ -14,6 +14,6 @@ Print title and body for all articles in news-main area of section 121:
 
 	ecmd area news-main 121 | ecmd article -f "title,body"
 
-Print title and content type of the first related item to the first related article in news-main area of section 121:
+Print title and content type of the first related item to the first article in news-main area of section 121:
 
 	ecmd area news-main 121 | head -n1 | ecmd article -r topcontentrel | ecmd article -f title -c contenttype
