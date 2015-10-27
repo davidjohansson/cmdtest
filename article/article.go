@@ -8,20 +8,19 @@ import (
 	"strings"
 )
 
-func Inspect(fields string, responsedata string, relations string, objectids []string) {
+func Inspect(fields string, responsedata string, relations string, meta string, objectids []string) {
 	for _, id := range objectids {
 		if id != ""{
-			InspectOne(fields, responsedata, relations, id)
+			InspectOne(fields, responsedata, relations, meta, id)
 		}
 	}
 }
 
-func InspectOne(fields string, responsedata string, relations string, objectid string) {
+func InspectOne(fields string, responsedata string, relations string, meta string, objectid string) {
 
 	url := fmt.Sprintf("https://objectapi-stage.app.svt.se/object-api/article/%s", objectid)
 	resp, err := http.Get(url)
 	defer resp.Body.Close()
-
 
 	if err != nil {
 		panic(err)
@@ -43,10 +42,12 @@ func InspectOne(fields string, responsedata string, relations string, objectid s
 
 	responseMeta := jsonResponse["response"].(map[string]interface{})
 	linksMeta := jsonResponse["links"].(map[string]interface{})
+	metaData := jsonResponse["meta"].(map[string]interface{})
 
 	printResponseData(responsedata, objectid, responseMeta)
 	printArticle(fields, objectid, responseMeta)
 	printRelations(relations, objectid, linksMeta)
+	printMeta(meta, objectid, metaData)
 
 	fmt.Print("\n")
 }
@@ -55,6 +56,10 @@ func printArticle(fields string, objectid string, response map[string]interface{
 	article := response["article"].(map[string]interface{})
 	printFields(article, fields)
 
+}
+
+func printMeta(metaFields string, objectid string, metaData map[string]interface{}) {
+	printFields(metaData, metaFields)
 }
 
 func printRelations(relations string, objectId string, links map[string]interface{}) {

@@ -40,7 +40,11 @@ func main() {
 				},
 				cli.StringFlag{
 					Name: "relations, r",
-					Usage: "Comma separated list of relations to show, e g 'topContentRel'",
+					Usage: "Name of relation to show, e g 'topContentRel'",
+				},
+				cli.StringFlag{
+					Name: "meta, m",
+					Usage: "Comma separated list of metadata to show, e g 'createdDate'",
 				},
 			},
 			Action: func(c *cli.Context) {
@@ -60,7 +64,7 @@ func main() {
 
 
 
-				article.Inspect(c.String("fields"), c.String("responsedata"), c.String("relations"), ids)
+				article.Inspect(c.String("fields"), c.String("responsedata"), c.String("relations"), c.String("meta"), ids)
 			},
 		},
 		{
