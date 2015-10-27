@@ -1,10 +1,10 @@
 # ecmd
-Written in Go, ecmd is a command line tool for common Escenic tasks. It supports piped output to allow for chaining of commands.
+Written in Go, ecmd is a command line tool for common Escenic tasks. It attempts to support piped input/output to allow for chaining of commands.
 
 ## Examples
-Print title and body for article 123456
+Print title and body for article 123456:
 
-	ecmd article -f "title,body"
+	ecmd article -f "title,body" 123456
 
 List contents in news-main of section 121:
 
