@@ -46,6 +46,9 @@ func main() {
 			Action: func(c *cli.Context) {
 
 				ids := c.Args()
+
+
+
 				if len(ids) == 0 {
 					piped := make([]string, 0)
 					scanner := bufio.NewScanner(os.Stdin)
@@ -54,6 +57,8 @@ func main() {
 					}
 					ids = piped
 				}
+
+
 
 				article.Inspect(c.String("fields"), c.String("responsedata"), c.String("relations"), ids)
 			},

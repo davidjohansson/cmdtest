@@ -10,7 +10,9 @@ import (
 
 func Inspect(fields string, responsedata string, relations string, objectids []string) {
 	for _, id := range objectids {
-		InspectOne(fields, responsedata, relations, id)
+		if id != ""{
+			InspectOne(fields, responsedata, relations, id)
+		}
 	}
 }
 
@@ -42,10 +44,12 @@ func InspectOne(fields string, responsedata string, relations string, objectid s
 	responseMeta := ma["response"].(map[string]interface{})
 	linksMeta := ma["links"].(map[string]interface{})
 
-	fmt.Println(fmt.Sprintf("id:%s", objectid))
-
+	//print data
+//	fmt.Println(fmt.Sprintf("id:%s", objectid))
 	printResponseData(responsedata, objectid, responseMeta)
-	printArticle(fields, objectid, responseMeta, linksMeta)
+	printArticle(fields, objectid, responseMeta)
+	printRelations(relations, objectid, linksMeta)
+
 	fmt.Print("\n")
 }
 
@@ -55,19 +59,33 @@ type Args struct {
 	RelationFields [] string
 }
 
-func printArticle(fields string, objectid string, response map[string]interface{}, links map[string]interface{}) {
+func printArticle(fields string, objectid string, response map[string]interface{}) {
 	article := response["article"].(map[string]interface{})
-//	relatedMeta := links["related"].(map[string]interface{})
-//	teasers := relatedMeta["teasers"].([]interface{})
-
 
 	printFields(article, fields)
-	fmt.Println("rels")
-//	printFields(teasers, "")
 
 }
 
+func printRelations(relations string, objectId string, links map[string]interface{}) {
+
+	if relations != "" {
+		relatedMeta := links["related"].(map[string]interface{})
+
+		teasers := relatedMeta[relations].([]interface{})
+
+		for _, v := range teasers{
+			teaser := v.(map[string]interface{})
+			fmt.Println(int(teaser["id"].(float64)))
+		}
+	}
+}
+
 func printResponseData(responseData string, objectid string, response map[string]interface{}) {
+
+	if responseData == "_all" {
+		responseData = "contentType,relativeUri,url"
+	}
+
 	printFields(response, responseData)
 }
 
@@ -75,7 +93,7 @@ func printFields(datamap map[string]interface{}, fields string) {
 	for k, v := range datamap {
 		key := ""
 		fieldsslice := strings.Split(fields, ",")
-		if fields != "" {
+		if fields != "_all" {
 			for _, rawfield := range fieldsslice {
 				field := strings.TrimSpace(rawfield)
 				if (strings.EqualFold(field, strings.TrimSpace(k))) {
@@ -83,15 +101,21 @@ func printFields(datamap map[string]interface{}, fields string) {
 				}
 			}
 
-		} else {
-			key = k
+			//		} else {
+			//			key = k
 		}
 
 		if key != "" {
 			kp := strings.TrimSpace(key)
 			fmt.Print(kp)
 			fmt.Print(": ")
-			fmt.Print(v)
+
+			if key == "id"{
+				fmt.Print(int(v.(float64)))
+			} else{
+				fmt.Print(v)
+			}
+
 			fmt.Print("\n")
 		}
 	}
