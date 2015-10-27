@@ -10,7 +10,7 @@ import (
 
 func Inspect(fields string, responsedata string, relations string, meta string, objectids []string) {
 	for _, id := range objectids {
-		if id != ""{
+		if id != "" {
 			InspectOne(fields, responsedata, relations, meta, id)
 		}
 	}
@@ -68,7 +68,7 @@ func printRelations(relations string, objectId string, links map[string]interfac
 		relatedMeta := links["related"].(map[string]interface{})
 		relatedContent := relatedMeta[relations].([]interface{})
 
-			for _, v := range relatedContent {
+		for _, v := range relatedContent {
 			teaser := v.(map[string]interface{})
 			fmt.Println(int(teaser["id"].(float64)))
 		}
@@ -95,9 +95,8 @@ func printFields(datamap map[string]interface{}, fields string) {
 					key = strings.TrimSpace(k)
 				}
 			}
-
-			//		} else {
-			//			key = k
+		} else {
+			key = k
 		}
 
 		if key != "" {
@@ -105,9 +104,9 @@ func printFields(datamap map[string]interface{}, fields string) {
 			fmt.Print(kp)
 			fmt.Print(": ")
 
-			if key == "id"{
+			if key == "id" {
 				fmt.Print(int(v.(float64)))
-			} else{
+			} else {
 				fmt.Print(v)
 			}
 
