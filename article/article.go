@@ -16,7 +16,7 @@ func Inspect(fields string, responsedata string, relations string, meta string, 
 	}
 }
 
-func InspectOne(fields string, responsedata string, relations string, meta string, objectid string) {
+func InspectOne(fieldkeys string, responsekeys string, relationkeys string, metakeys string, objectid string) {
 
 	url := fmt.Sprintf("https://objectapi-stage.app.svt.se/object-api/article/%s", objectid)
 	resp, err := http.Get(url)
@@ -40,26 +40,31 @@ func InspectOne(fields string, responsedata string, relations string, meta strin
 		panic(err)
 	}
 
-	responseMeta := jsonResponse["response"].(map[string]interface{})
-	linksMeta := jsonResponse["links"].(map[string]interface{})
+	responseData := jsonResponse["response"].(map[string]interface{})
+	linksData := jsonResponse["links"].(map[string]interface{})
 	metaData := jsonResponse["meta"].(map[string]interface{})
 
-	printResponseData(responsedata, objectid, responseMeta)
-	printArticle(fields, objectid, responseMeta)
-	printRelations(relations, objectid, linksMeta)
-	printMeta(meta, objectid, metaData)
+	printResponseData(responsekeys, objectid, responseData)
+	printArticle(fieldkeys, objectid, responseData)
+	printRelations(relationkeys, objectid, linksData)
+	printMeta(metakeys, objectid, metaData)
 
 	fmt.Print("\n")
+}
+
+func printResponseData(responseData string, objectid string, response map[string]interface{}) {
+
+	if responseData == "_all" {
+		responseData = "contentType,relativeUri,url"
+	}
+
+	printFields(response, responseData)
 }
 
 func printArticle(fields string, objectid string, response map[string]interface{}) {
 	article := response["article"].(map[string]interface{})
 	printFields(article, fields)
 
-}
-
-func printMeta(metaFields string, objectid string, metaData map[string]interface{}) {
-	printFields(metaData, metaFields)
 }
 
 func printRelations(relations string, objectId string, links map[string]interface{}) {
@@ -75,13 +80,8 @@ func printRelations(relations string, objectId string, links map[string]interfac
 	}
 }
 
-func printResponseData(responseData string, objectid string, response map[string]interface{}) {
-
-	if responseData == "_all" {
-		responseData = "contentType,relativeUri,url"
-	}
-
-	printFields(response, responseData)
+func printMeta(metaFields string, objectid string, metaData map[string]interface{}) {
+	printFields(metaData, metaFields)
 }
 
 func printFields(datamap map[string]interface{}, fields string) {
