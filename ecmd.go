@@ -32,11 +32,11 @@ func main() {
 			Flags:     []cli.Flag{
 				cli.StringFlag{
 					Name: "fields, f",
-					Usage: "Comma separated list of fields to display.",
+					Usage: "Comma separated list of fields to display. Using '_all' as value will display all fields.",
 				},
 				cli.StringFlag{
 					Name: "responsedata, c",
-					Usage: "Comma separated list of response fields to display, e g 'contentType'",
+					Usage: "Comma separated list of response fields to display, e g 'contentType'.  Using '_all' as value will display all fields.",
 				},
 				cli.StringFlag{
 					Name: "relations, r",
@@ -44,7 +44,7 @@ func main() {
 				},
 				cli.StringFlag{
 					Name: "meta, m",
-					Usage: "Comma separated list of metadata to show, e g 'createdDate'",
+					Usage: "Comma separated list of metadata to show, e g 'createdDate'.  Using '_all' as value will display all fields.",
 				},
 			},
 			Action: func(c *cli.Context) {
